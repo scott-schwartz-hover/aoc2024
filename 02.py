@@ -20,8 +20,7 @@ def is_safe(row):
             return False
         if n == cur:
             return False
-        diff = abs(cur - n)
-        if diff > 3:
+        if abs(cur - n) > 3:
             return False
         cur = n
     return True
