@@ -7,6 +7,9 @@ def format_row(row):
     return list(map(int, row.split(" ")))
 
 
+reports = list(map(format_row, data))
+
+
 def is_safe(row):
     cur, *rest = row
     increasing = cur < rest[0]
@@ -24,7 +27,8 @@ def is_safe(row):
     return True
 
 
-reports = list(map(format_row, data))
+def lists_missing_one(row):
+    return [row[:i] + row[i + 1 :] for i in range(len(row))]
 
 
 def p1():
@@ -33,14 +37,9 @@ def p1():
 
 # Brute force
 def p2():
-    res = 0
-    for row in reports:
-        lists_missing_one = [row[:i] + row[i + 1 :] for i in range(len(row))]
-        for l in lists_missing_one:
-            if is_safe(l):
-                res += 1
-                break
-    return res
+    return sum(
+        [1 if any(is_safe(l) for l in lists_missing_one(row)) else 0 for row in reports]
+    )
 
 
 print(p1(), p2())
